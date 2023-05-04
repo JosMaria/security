@@ -1,11 +1,12 @@
 package com.mariacoder.security.repository;
 
+import com.mariacoder.security.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.mariacoder.security.user.User;
-
+@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     
     Optional<User> findByUsername(String username);
