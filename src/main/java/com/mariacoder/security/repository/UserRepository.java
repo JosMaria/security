@@ -1,6 +1,6 @@
 package com.mariacoder.security.repository;
 
-import com.mariacoder.security.user.User;
+import com.mariacoder.security.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

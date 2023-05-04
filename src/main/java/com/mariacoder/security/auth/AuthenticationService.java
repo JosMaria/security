@@ -1,6 +1,6 @@
 package com.mariacoder.security.auth;
 
-import com.mariacoder.security.user.Role;
+import com.mariacoder.security.domain.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mariacoder.security.config.JwtService;
 import com.mariacoder.security.repository.UserRepository;
-import com.mariacoder.security.user.User;
+import com.mariacoder.security.domain.User;
 
 import lombok.RequiredArgsConstructor;
 

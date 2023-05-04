@@ -1,4 +1,4 @@
-package com.mariacoder.security.user;
+package com.mariacoder.security.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.mariacoder.security.user;
+package com.mariacoder.security.domain;
 
 public enum Role {
 
