@@ -2,7 +2,7 @@ package com.mariacoder.security.config;
 
 public class SecurityConstants {
 
-    public static final String SECRET_KEY = "635166546A576E5A7234753778214125442A472D4B614E645267556B58703273";
+    public static final String SECRET_KEY = "6B58703273357638792F423F4528482B4D6251655468576D597133743677397A";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
 

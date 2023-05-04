@@ -1,8 +1,11 @@
 package com.mariacoder.security.auth;
 
 import com.mariacoder.security.user.Role;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import com.mariacoder.security.user.User;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AuthenticationService {
@@ -31,18 +35,22 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(token)
-                .build();
+        return  generateAndResponseToken(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        manager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        // this line validate user and password ?
+        manager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        String token = jwtService.generateToken(user);
+        // this line is unnecessary? only to user in function to its username
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Credentials incorrect"));
+
+        return generateAndResponseToken(user);
+    }
+
+    private AuthenticationResponse generateAndResponseToken(UserDetails userDetails) {
+        String token = jwtService.generateToken(userDetails);
         return AuthenticationResponse.builder()
                 .token(token)
                 .build();
