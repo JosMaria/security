@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.jsonwebtoken.io.IOException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,5 +27,11 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok().body(authService.authenticate(request));
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authService.refreshToken(request, response);
+        return ResponseEntity.noContent().build();
     }
 }
