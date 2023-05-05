@@ -1,6 +1,5 @@
 package com.mariacoder.security.config;
 
-import com.mariacoder.security.domain.Token;
 import com.mariacoder.security.repository.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static com.mariacoder.security.config.SecurityConstants.HEADER_STRING;
 import static com.mariacoder.security.config.SecurityConstants.TOKEN_PREFIX;
