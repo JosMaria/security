@@ -36,11 +36,13 @@ public class AuthenticationService {
                 .build();
         User userPersisted = userRepository.save(user);
         String jwtToken = jwtService.generateToken(userPersisted);
+        String refreshToken = jwtService.generateRefreshToken(userPersisted);
         buildAndSaveToken(userPersisted, jwtToken);
         // TODO: what happen if we register n times
         // TODO: verify if user exists
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -77,11 +79,13 @@ public class AuthenticationService {
         User userObtained = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Credentials incorrect"));
         String jwtToken = jwtService.generateToken(userObtained);
+        String refreshToken = jwtService.generateRefreshToken(userObtained);
         revokeAllUserTokens(userObtained);
         buildAndSaveToken(userObtained, jwtToken);
 
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }

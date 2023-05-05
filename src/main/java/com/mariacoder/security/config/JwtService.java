@@ -32,12 +32,20 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, JWT_EXPIRATION);
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, REFRESH_JWT_EXPIRATION);
+    }
+
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ONE_HOUR + ONE_MINUTE))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -64,7 +72,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(SecurityConstants.SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
